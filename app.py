@@ -263,6 +263,9 @@ def edit_artist(artist_id):
 def edit_artist_submission(artist_id):
   form = ArtistForm()
   artist = Artist.query.get(artist_id)
+  if artist is None:
+    flash(f'No such artist (id: {artist_id})')
+    return redirect(url_for("artists"))
   if not request.form['facebook_link']:
     form.facebook_link.validators = []
   try:
@@ -307,6 +310,9 @@ def edit_venue(venue_id):
 def edit_venue_submission(venue_id):
   venue = Venue.query.get(venue_id)
   form = VenueForm()
+  if venue is None:
+    flash(f'No such venue (id: {venue_id})')
+    return redirect(url_for("venues"))
   if not request.form['facebook_link']:
     form.facebook_link.validators = []
   try:
